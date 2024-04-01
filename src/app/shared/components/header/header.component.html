@@ -1,0 +1,10 @@
+<header>
+  <div>Cart Items: {{ cartItemCount }}</div>
+
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    placeholder="ابحث عن المنتجات..."
+    (input)="searchProducts()"
+  />
+</header>

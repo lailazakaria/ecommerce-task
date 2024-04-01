@@ -1,0 +1,42 @@
+<div class="loader_container" *ngIf="loading">
+  <div class="loader"></div>
+</div>
+<div class="container products">
+  <div
+    class="card"
+    *ngFor="
+      let product of products.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+      )
+    "
+  >
+    <div class="image">
+      <img src="{{ product.image }}" alt="" />
+    </div>
+
+    <h3 class="product-name">{{ product.title }}</h3>
+    <p class="product-description">
+      {{
+        product.description.length > 80
+          ? product.description.slice(0, 80) + "..."
+          : product.description
+      }}
+    </p>
+    <div>
+      <div class="product-price"><b>Price:</b> ${{ product.price }}</div>
+    </div>
+    <div class="buttons">
+      <button (click)="addToCart(product)">+</button>
+      <button (click)="removeFromCart(product)">-</button>
+    </div>
+  </div>
+</div>
+<div>
+  <button
+    *ngFor="let page of getPaginationArray()"
+    (click)="onPageChange(page)"
+  >
+    {{ page }}
+  </button>
+</div>
