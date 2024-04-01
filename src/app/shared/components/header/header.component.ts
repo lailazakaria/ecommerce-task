@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CartsService } from 'src/app/carts/services/carts.service';
 
@@ -26,5 +32,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.cartSubscription.unsubscribe();
   }
-  searchProducts() {}
+  @Output() searchQueryChange = new EventEmitter<string>();
+  searchQuery: string = '';
+  search(): void {
+    this.searchQueryChange.emit(this.searchQuery);
+  }
 }

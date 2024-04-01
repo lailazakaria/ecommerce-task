@@ -1,3 +1,4 @@
+<app-header (searchQueryChange)="updateProducts($event)"></app-header>
 <div class="loader_container" *ngIf="loading">
   <div class="loader"></div>
 </div>
@@ -11,32 +12,42 @@
       )
     "
   >
-    <div class="image">
-      <img src="{{ product.image }}" alt="" />
-    </div>
+    <div class="image"><img src="{{ product.image }}" alt="" /></div>
 
-    <h3 class="product-name">{{ product.title }}</h3>
-    <p class="product-description">
-      {{
-        product.description.length > 80
-          ? product.description.slice(0, 80) + "..."
-          : product.description
-      }}
-    </p>
+    <div class="details">
+      <h3 class="product-title">
+        {{
+          product.title.length > 30 ? product.title.slice(0, 30) : product.title
+        }}
+      </h3>
+      <div class="category">"{{ product.category }}"</div>
+      <p class="product-description">
+        {{
+          product.description.length > 60
+            ? product.description.slice(0, 60) + "..."
+            : product.description
+        }}
+      </p>
+    </div>
     <div>
       <div class="product-price"><b>Price:</b> ${{ product.price }}</div>
     </div>
-    <div class="buttons">
+    <div class="btn btn-cart">
       <button (click)="addToCart(product)">+</button>
+
       <button (click)="removeFromCart(product)">-</button>
     </div>
   </div>
 </div>
-<div>
+<div class="btn container">
+  <button (click)="previousPage()" [ngClass]="{ disabled: currentPage === 1 }">
+    Previous
+  </button>
+
   <button
-    *ngFor="let page of getPaginationArray()"
-    (click)="onPageChange(page)"
+    (click)="nextPage()"
+    [ngClass]="{ disabled: currentPage === getPaginationArray().length }"
   >
-    {{ page }}
+    Next
   </button>
 </div>

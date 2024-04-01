@@ -44,3 +44,14 @@
     transform: rotate(360deg);
   }
 }
+button {
+  width: 5rem;
+  background-color: #6f2877;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
