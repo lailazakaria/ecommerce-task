@@ -20,6 +20,10 @@ export class ProductListComponent {
   ) {}
 
   ngOnInit() {
+    this.loadProducts();
+  }
+
+  loadProducts() {
     this.loading = true;
     this.productService.getProducts().subscribe(
       (data: product[]) => {
@@ -34,11 +38,11 @@ export class ProductListComponent {
     );
   }
 
-  addToCart(product: product): void {
+  addToCart(product: product) {
     this.cartService.addToCart(product);
   }
 
-  removeFromCart(product: product): void {
+  removeFromCart(product: product) {
     this.cartService.removeFromCart(product);
   }
 
@@ -52,11 +56,11 @@ export class ProductListComponent {
     return Array.from({ length: pageCount }, (_, index) => index + 1);
   }
 
-  onPageChange(pageNumber: number): void {
+  onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;
   }
 
-  updateProducts(searchQuery: string): void {
+  updateProducts(searchQuery: string) {
     this.searchQuery = searchQuery.trim().toLowerCase();
     if (this.searchQuery) {
       this.products = this.products.filter(
@@ -68,6 +72,7 @@ export class ProductListComponent {
       this.ngOnInit();
     }
   }
+
   previousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;

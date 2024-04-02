@@ -2,7 +2,7 @@
 <div class="loader_container" *ngIf="loading">
   <div class="loader"></div>
 </div>
-<div class="container products">
+<div class="container products" *ngIf="!loading">
   <div
     class="card"
     *ngFor="
@@ -34,16 +34,14 @@
     </div>
     <div class="btn btn-cart">
       <button (click)="addToCart(product)">+</button>
-
       <button (click)="removeFromCart(product)">-</button>
     </div>
   </div>
 </div>
-<div class="btn container">
+<div class="btn btn-pagination container">
   <button (click)="previousPage()" [ngClass]="{ disabled: currentPage === 1 }">
     Previous
   </button>
-
   <button
     (click)="nextPage()"
     [ngClass]="{ disabled: currentPage === getPaginationArray().length }"
@@ -51,3 +49,4 @@
     Next
   </button>
 </div>
+<app-footer></app-footer>
