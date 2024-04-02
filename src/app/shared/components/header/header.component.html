@@ -6,11 +6,11 @@
         <input
           type="text"
           [(ngModel)]="searchQuery"
-          (input)="search()"
+          (ngModelChange)="search()"
           placeholder="Search"
         />
       </div>
-      <div>Cart Items: {{ cartItemCount }}</div>
+      <div class="cart-item">Cart Items: {{ cartItemCount }}</div>
     </div>
   </header>
 </div>

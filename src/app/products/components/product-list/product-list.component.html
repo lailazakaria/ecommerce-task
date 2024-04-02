@@ -1,43 +1,51 @@
 <app-header (searchQueryChange)="updateProducts($event)"></app-header>
+
 <div class="loader_container" *ngIf="loading">
   <div class="loader"></div>
 </div>
-<div class="container products" *ngIf="!loading">
-  <div
-    class="card"
-    *ngFor="
-      let product of products.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-      )
-    "
-  >
-    <div class="image"><img src="{{ product.image }}" alt="" /></div>
 
-    <div class="details">
-      <h3 class="product-title">
-        {{
-          product.title.length > 30 ? product.title.slice(0, 30) : product.title
-        }}
-      </h3>
-      <div class="category">"{{ product.category }}"</div>
-      <p class="product-description">
-        {{
-          product.description.length > 60
-            ? product.description.slice(0, 60) + "..."
-            : product.description
-        }}
-      </p>
-    </div>
-    <div>
+<div class="container" *ngIf="!loading">
+  <div class="products" *ngIf="filteredProducts.length; else noResultsTemplate">
+    <div
+      *ngFor="
+        let product of filteredProducts.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        )
+      "
+      class="card"
+    >
+      <div class="image"><img src="{{ product.image }}" alt="" /></div>
+
+      <div class="details">
+        <h3 class="product-title">
+          {{
+            product.title.length > 30
+              ? product.title.slice(0, 30)
+              : product.title
+          }}
+        </h3>
+        <div class="category">"{{ product.category }}"</div>
+        <p class="product-description">
+          {{
+            product.description.length > 60
+              ? product.description.slice(0, 60) + "..."
+              : product.description
+          }}
+        </p>
+      </div>
       <div class="product-price"><b>Price:</b> ${{ product.price }}</div>
-    </div>
-    <div class="btn btn-cart">
-      <button (click)="addToCart(product)">+</button>
-      <button (click)="removeFromCart(product)">-</button>
+      <div class="btn btn-cart">
+        <button (click)="addToCart(product)">+</button>
+        <button (click)="removeFromCart(product)">-</button>
+      </div>
     </div>
   </div>
+  <ng-template #noResultsTemplate>
+    <div class="no-results">There are no matching search results.</div>
+  </ng-template>
 </div>
+
 <div class="btn btn-pagination container">
   <button (click)="previousPage()" [ngClass]="{ disabled: currentPage === 1 }">
     Previous
@@ -49,4 +57,5 @@
     Next
   </button>
 </div>
+
 <app-footer></app-footer>

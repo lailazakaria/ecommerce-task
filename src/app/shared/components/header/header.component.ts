@@ -5,7 +5,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, debounceTime } from 'rxjs';
 import { CartsService } from 'src/app/carts/services/carts.service';
 
 @Component({
@@ -16,9 +16,9 @@ import { CartsService } from 'src/app/carts/services/carts.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   cartItemCount: number = 0;
   searchQuery: string = '';
-
   private cartSubscription!: Subscription;
-
+  private searchSubject: Subject<string> = new Subject();
+  @Output() searchQueryChange = new EventEmitter<string>();
   constructor(private cartService: CartsService) {}
   ngOnInit() {
     this.cartSubscription = this.cartService
@@ -27,17 +27,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.cartItemCount = count;
         console.log(this.cartItemCount);
       });
+    this.searchSubject.pipe(debounceTime(300)).subscribe((searchTerm) => {
+      this.searchQueryChange.emit(searchTerm);
+    });
   }
 
   ngOnDestroy() {
     this.cartSubscription.unsubscribe();
+    this.searchSubject.unsubscribe();
   }
 
-  @Output() searchQueryChange = new EventEmitter<string>();
-
   search(): void {
-    this.searchQueryChange.emit(this.searchQuery);
-    console.log(this.searchQuery);
-    console.log(this.searchQueryChange);
+    this.searchSubject.next(this.searchQuery);
   }
 }

@@ -13,6 +13,7 @@ export class ProductListComponent {
   itemsPerPage = 8;
   loading: boolean = false;
   searchQuery: string = '';
+  filteredProducts: product[] = [];
 
   constructor(
     private productService: ProductsService,
@@ -29,6 +30,7 @@ export class ProductListComponent {
       (data: product[]) => {
         console.log(data);
         this.products = data;
+        this.filteredProducts = data;
         this.loading = false;
       },
       (error) => {
@@ -36,6 +38,19 @@ export class ProductListComponent {
         this.loading = false;
       }
     );
+  }
+
+  updateProducts(searchQuery: string) {
+    this.searchQuery = searchQuery.trim().toLowerCase();
+    if (this.searchQuery) {
+      this.filteredProducts = this.products.filter(
+        (product) =>
+          product.title.toLowerCase().includes(this.searchQuery) ||
+          product.category.toLowerCase().includes(this.searchQuery)
+      );
+    } else {
+      this.filteredProducts = this.products;
+    }
   }
 
   addToCart(product: product) {
@@ -49,20 +64,6 @@ export class ProductListComponent {
   getPaginationArray(): number[] {
     const pageCount = Math.ceil(this.products.length / this.itemsPerPage);
     return Array.from({ length: pageCount }, (_, index) => index + 1);
-  }
-
-  updateProducts(searchQuery: string) {
-    this.searchQuery = searchQuery.trim().toLowerCase();
-    console.log(this.searchQuery);
-    if (this.searchQuery) {
-      this.products = this.products.filter(
-        (product) =>
-          product.title.toLowerCase().includes(this.searchQuery) ||
-          product.category.toLowerCase().includes(this.searchQuery)
-      );
-    } else {
-      this.ngOnInit();
-    }
   }
 
   previousPage(): void {
