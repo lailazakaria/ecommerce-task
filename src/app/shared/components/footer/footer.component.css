@@ -1,24 +1,14 @@
-.wave-background {
-  height: 150px;
-  position: relative;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
+.content {
+  background-color: rgb(140, 213, 241);
+  padding: 1rem 0;
 }
-
-.wave-background svg {
-  position: absolute;
-  z-index: -1;
-  bottom: 0;
+.wave-background {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .footer_row {
   display: flex;
   gap: 20px;
-}
-
-@media (max-width: 800px) {
-  svg {
-    bottom: 1rem;
-  }
 }

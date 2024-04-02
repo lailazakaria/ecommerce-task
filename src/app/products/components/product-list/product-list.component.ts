@@ -46,22 +46,14 @@ export class ProductListComponent {
     this.cartService.removeFromCart(product);
   }
 
-  getPaginatedProducts(): product[] {
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return this.products.slice(startIndex, startIndex + this.itemsPerPage);
-  }
-
   getPaginationArray(): number[] {
     const pageCount = Math.ceil(this.products.length / this.itemsPerPage);
     return Array.from({ length: pageCount }, (_, index) => index + 1);
   }
 
-  onPageChange(pageNumber: number) {
-    this.currentPage = pageNumber;
-  }
-
   updateProducts(searchQuery: string) {
     this.searchQuery = searchQuery.trim().toLowerCase();
+    console.log(this.searchQuery);
     if (this.searchQuery) {
       this.products = this.products.filter(
         (product) =>

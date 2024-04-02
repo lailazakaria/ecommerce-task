@@ -15,7 +15,7 @@ import { CartsService } from 'src/app/carts/services/carts.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   cartItemCount: number = 0;
-  searchTerm: string = '';
+  searchQuery: string = '';
 
   private cartSubscription!: Subscription;
 
@@ -32,9 +32,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.cartSubscription.unsubscribe();
   }
+
   @Output() searchQueryChange = new EventEmitter<string>();
-  searchQuery: string = '';
+
   search(): void {
     this.searchQueryChange.emit(this.searchQuery);
+    console.log(this.searchQuery);
+    console.log(this.searchQueryChange);
   }
 }
